@@ -1,14 +1,6 @@
 import pytest
 import gol
 
-def test_create_cell():
-    """ Testing if we can create a cell"""
-    assert gol.create_cell
-
-def test_check_if_alive():
-    """Test if the cell is living"""
-    assert gol.is_alive
-
 def test_count_neighbors_should_return_3_for_three_neighbors():
     neighborhood = [
         [0, 1, 0,],
@@ -76,6 +68,71 @@ def test_a_cell_with_two_neighbors_dies_after_1_tick():
     assert neighborhood == [
         [1, 1, 0,],
         [0, 0, 0,],
+        [0, 0, 0,],
+    ]
+
+def test_a_cell_with_three_neighbors_lives_after_1_tick():
+    neighborhood = [
+        [1, 1, 1,],
+        [0, 1, 0,],
+        [0, 0, 0,],
+    ]
+    gol.tick(neighborhood)
+    assert neighborhood == [
+        [1, 1, 1,],
+        [0, 1, 0,],
+        [0, 0, 0,],
+    ]
+
+def test_a_cell_with_five_or_more_neighbors_dies_after_one_tick():
+    neighborhood = [
+        [1, 1, 1,],
+        [0, 1, 1,],
+        [1, 0, 0,],
+    ]
+    gol.tick(neighborhood)
+    assert neighborhood == [
+        [1, 1, 1,],
+        [0, 0, 1,],
+        [1, 0, 0,],
+    ]
+
+def test_a_dead_cell_with_one_or_two_neighbors_remains_dead_after_one_tick():
+    neighborhood = [
+        [1, 0, 1,],
+        [0, 0, 0,],
+        [0, 0, 0,],
+    ]
+    gol.tick(neighborhood)
+    assert neighborhood == [
+        [1, 0, 1,],
+        [0, 0, 0,],
+        [0, 0, 0,],
+    ]
+
+def test_a_dead_cell_four_or_more_neighbors_remains_dead_after_one_tick():
+    neighborhood = [
+        [1, 0, 1,],
+        [1, 0, 0,],
+        [1, 0, 0,],
+    ]
+    gol.tick(neighborhood)
+    assert neighborhood == [
+        [1, 0, 1,],
+        [1, 0, 0,],
+        [1, 0, 0,],
+    ]
+
+def test_a_dead_cell_with_three_neighbors_comes_to_life_after_one_tick():
+    neighborhood = [
+        [1, 0, 1,],
+        [1, 0, 0,],
+        [0, 0, 0,],
+    ]
+    gol.tick(neighborhood)
+    assert neighborhood == [
+        [1, 0, 1,],
+        [1, 1, 0,],
         [0, 0, 0,],
     ]
 
